@@ -143,8 +143,10 @@ public class TwitterBean implements Serializable {
     public void savePesquisa() {
         Pesquisa pesquisa = new Pesquisa();
         pesquisa.setUsuario("@Rodrigo");
-        pesquisa.setDataHoraPost("27/05/2015 08:53");
+        pesquisa.setDataHoraPost("27/05/2015 07:53");
         pesquisa.setLocalizacao("Cruzeiro");
+        pesquisa.setMsgPost("Texto do post");
+        pesquisa.setDataAtual("27/05/2015 09:00");
     }
 
 }
