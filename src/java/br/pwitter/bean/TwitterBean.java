@@ -1,5 +1,6 @@
 package br.pwitter.bean;
 
+import br.pwitter.dao.PesquisaDao;
 import br.pwitter.dao.PessoaDao;
 import br.pwitter.model.Pessoa;
 import br.pwitter.model.Pesquisa;
@@ -147,6 +148,7 @@ public class TwitterBean implements Serializable {
         pesquisa.setLocalizacao("Cruzeiro");
         pesquisa.setMsgPost("Texto do post");
         pesquisa.setDataAtual("27/05/2015 09:00");
+        new PesquisaDao().inserir(pesquisa);
     }
 
 }

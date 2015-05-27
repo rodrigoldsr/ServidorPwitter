@@ -26,10 +26,12 @@ public class PesquisaDao {
     
     private void openSession() {
         setSession(HibernateUtil.getSessionFactory().openSession());
+        LOG.info("[PesquisaDao/openSession] Sessão aberta");
     }
     
     private void closeSession() {
         getSession().close();
+        LOG.info("[PesquisaDao/closeSession] Sessão fechada");
     }
     
     public boolean inserir(Pesquisa pesquisa) {
@@ -39,15 +41,13 @@ public class PesquisaDao {
             getSession().beginTransaction();
             getSession().save(pesquisa);
             getSession().getTransaction().commit();
+            retorno = true;
             LOG.info("[PesquisaDao/inserir] Objeto pesquisa inserido com sucesso!");
         } catch(Exception ex) {
             LOG.error("[PesquisaDao/inserir] Erro: "+ex.getMessage());
         } finally {
             closeSession();
-            LOG.info("[PesquisaDao/inserir] Sessão fechada");
         }
-        
-        
         return retorno;
     }
     
