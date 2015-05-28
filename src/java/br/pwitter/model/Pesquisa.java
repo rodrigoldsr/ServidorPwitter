@@ -16,7 +16,7 @@ import javax.xml.bind.annotation.XmlType;
 @Entity
 @Table(name = "pesquisa")
 @XmlRootElement
-@XmlType(propOrder = {"usuario", "dataHoraPost", "localizacao", "msgPost", "data_atual"})
+@XmlType(propOrder = {"usuario", "dataHoraPost", "localizacao", "msgPost", "dataAtual", "termoPesquisado"})
 public class Pesquisa implements Serializable {
 
     @Id
@@ -27,6 +27,7 @@ public class Pesquisa implements Serializable {
     private String localizacao;
     private String msgPost;
     private String dataAtual;
+    private String termoPesquisado;
 
     public Long getId() {
         return id;
@@ -74,6 +75,14 @@ public class Pesquisa implements Serializable {
 
     public void setDataAtual(String dataAtual) {
         this.dataAtual = dataAtual;
+    }
+
+    public String getTermoPesquisado() {
+        return termoPesquisado;
+    }
+
+    public void setTermoPesquisado(String termoPesquisado) {
+        this.termoPesquisado = termoPesquisado;
     }
     
     /**

@@ -3,6 +3,8 @@ package br.pwitter.dao;
 import br.pwitter.hibernate.HibernateUtil;
 import org.hibernate.Session;
 import br.pwitter.model.Pesquisa;
+import java.util.List;
+import org.hibernate.Criteria;
 import twitter4j.Logger;
 
 /**
@@ -45,6 +47,21 @@ public class PesquisaDao {
             LOG.info("[PesquisaDao/inserir] Objeto pesquisa inserido com sucesso!");
         } catch(Exception ex) {
             LOG.error("[PesquisaDao/inserir] Erro: "+ex.getMessage());
+        } finally {
+            closeSession();
+        }
+        return retorno;
+    }
+    
+    public List listar() {
+        List retorno = null;
+        try {
+            openSession();
+            Criteria cri = getSession().createCriteria(Pesquisa.class);
+            retorno = cri.list();
+            LOG.info("[PesquisaDao/listar] Listagem do BD feita com sucesso!");
+        } catch(Exception ex) {
+            LOG.error("[PesquisaDao/listar] Erro: "+ex.getMessage());
         } finally {
             closeSession();
         }

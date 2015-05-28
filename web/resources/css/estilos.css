@@ -1,0 +1,43 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 28/05/2015, 12:24:46
+    Author     : master
+*/
+
+body {
+    margin: 0px;
+    padding: 0px;
+    font-family: Verdana;
+    font-size: 12px;
+    font-weight: 400;
+}
+
+.label {
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.inputText {
+    height: 25px;
+    width: 200px;
+    font-size: 12px;
+    padding: 2px;
+}
+
+.inputButton {
+    font-size: 12px;
+    height: 25px;
+}
+
+.tabela {
+    font-size: 12px;
+}
+
+.ui-column-title {
+    font-size: 12px !important;
+}
+

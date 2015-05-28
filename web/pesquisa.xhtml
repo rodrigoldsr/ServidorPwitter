@@ -1,0 +1,39 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <h:outputStylesheet library="css" name="estilos.css"  />
+    </h:head>
+    <h:body>
+        <div align="center">
+            <h:form id="frmPesquisa">
+                <p:messages />
+                
+                <h:panelGrid id="panelAlterar" columns="3" cellpadding="5">
+                    <h:outputLabel value="Termos" for="termoPesquisa" styleClass="label" />
+                    <p:inputText id="termoPesquisa" value="#{pesquisa.termoPesquisa}" label="Termos" styleClass="inputText" />
+                    <p:commandButton value="Buscar" id="btnCadastrar" actionListener="#{pesquisa.pesquisarTwitt}" validateClient="true" update="growl" icon="ui-icon-disk" ajax="false" styleClass="inputButton" />
+                </h:panelGrid>
+
+            </h:form>
+            <p:separator />
+            <p:dataTable var="resultado" value="#{pesquisa.pesquisaRelizada}" id="tblResuladoPesquisa" styleClass="tabela">
+                <f:facet name="header" >Resultado da pesquisa</f:facet>
+                <p:column headerText="Nome" styleClass="tbl-coluna">
+                    <h:outputText value="#{resultado.usuario}" />
+                </p:column>
+                <p:column headerText="Data/Hora Post" styleClass="tbl-coluna">
+                    <h:outputText value="#{resultado.dataHoraPost}" />
+                </p:column>
+                <p:column headerText="Localização" styleClass="tbl-coluna">
+                    <h:outputText value="#{resultado.localizacao}" />
+                </p:column>
+                <p:column headerText="Mensagem" styleClass="tbl-coluna">
+                    <h:outputText value="#{resultado.msgPost}" />
+                </p:column>
+                <p:column headerText="Data pesquisa" styleClass="tbl-coluna">
+                    <h:outputText value="#{resultado.dataAtual}" />
+                </p:column>
+            </p:dataTable>
+
+        </div>
+    </h:body>
+</html>
