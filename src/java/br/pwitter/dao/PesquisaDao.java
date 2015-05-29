@@ -36,21 +36,20 @@ public class PesquisaDao {
         LOG.info("[PesquisaDao/closeSession] Sessão fechada");
     }
     
-    public boolean inserir(Pesquisa pesquisa) {
-        boolean retorno = false;
+    public void inserir(List<Pesquisa> pesquisa) {
         try {
             openSession();
             getSession().beginTransaction();
-            getSession().save(pesquisa);
+            for(Pesquisa pesq : pesquisa){
+                getSession().save(pesq);
+            }
             getSession().getTransaction().commit();
-            retorno = true;
             LOG.info("[PesquisaDao/inserir] Objeto pesquisa inserido com sucesso!");
         } catch(Exception ex) {
             LOG.error("[PesquisaDao/inserir] Erro: "+ex.getMessage());
         } finally {
             closeSession();
         }
-        return retorno;
     }
     
     public List listar() {

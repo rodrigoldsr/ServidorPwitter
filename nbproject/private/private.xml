@@ -2,6 +2,12 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group name="[UNISAL] Jether - WebServices JAVA"/>
+        <group name="[UNISAL] Jether - WebServices JAVA">
+            <file>file:/E:/Desenvolvimento/NetBeansProjects/ServidorPwitter/src/java/br/pwitter/bean/PesquisaBean.java</file>
+            <file>file:/E:/Desenvolvimento/NetBeansProjects/ServidorPwitter/web/index.xhtml</file>
+            <file>file:/E:/Desenvolvimento/NetBeansProjects/ServidorPwitter/src/java/br/pwitter/bean/TwitterBean.java</file>
+            <file>file:/E:/Desenvolvimento/NetBeansProjects/ServidorPwitter/web/buscar.xhtml</file>
+            <file>file:/E:/Desenvolvimento/NetBeansProjects/ServidorPwitter/web/resources/css/estilos.css</file>
+        </group>
     </open-files>
 </project-private>

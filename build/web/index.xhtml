@@ -1,90 +1,40 @@
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui">
     <h:head>
+        <title>Pwitter - O que você está pensando?</title>
+        <h:outputStylesheet library="css" name="estilos.css" />
     </h:head>
     <h:body>
-        <div align="center">
-            <h:form id="formPrincipal">
-                <p:dataTable var="lista" value="#{pessoaBean.pessoas}"
-                             id="tabelaPessoas" style="width:70%">
-                    <f:facet name="header">Lista de Pessoas Cadastradas</f:facet>
-                    <p:column headerText="Nome">
-                        <h:outputText value="#{lista.nome}" />
-                    </p:column>
-                    <p:column headerText="Email">
-                        <h:outputText value="#{lista.email}" />
-                    </p:column>
-                    <p:column headerText="Telefone">
-                        <h:outputText value="#{lista.telefone}" />
-                    </p:column>
-                    <p:column headerText="Ações">
-                        <p:commandLink title="Alterar" update=":formAlterar:Alterar"
-                                       oncomplete="PF('dialogAlterar').show()" immediate="true">
-                            <h:graphicImage library="img" name="edit.png" />
-                            <f:setPropertyActionListener target="#{pessoaBean.pessoa}"
-                                                         value="#{lista}" />
-                        </p:commandLink>
-                        <p:commandLink title="Excluir" update=":formExcluir:Excluir"
-                                       oncomplete="PF('confirmation').show()" immediate="true">
-                            <h:graphicImage library="img" name="remove.png" />
-                            <f:setPropertyActionListener target="#{pessoaBean.pessoa}"
-                                                         value="#{lista}" />
-                        </p:commandLink>
-                    </p:column>
-                </p:dataTable>
-                <p:commandButton value="Cadastrar" id="cadastrar"
-                                 oncomplete="PF('dialogCadastrar').show()" />
-            </h:form>
-        </div>
-        <h:form id="formAlterar">
-            <p:dialog header="Alterar" widgetVar="dialogAlterar" modal="true"
-                      id="Alterar">
-                <p:panelGrid id="panelAlterar" columns="2">
-                    <h:outputText value="Nome:" />
-                    <p:inputText value="#{pessoaBean.pessoa.nome}" />
-                    <h:outputText value="Email:" />
-                    <p:inputText value="#{pessoaBean.pessoa.email}" />
-                    <h:outputText value="Telefone:" />
-                    <p:inputText value="#{pessoaBean.pessoa.telefone}" />
-                </p:panelGrid>
-                <p:commandButton value="Alterar"
-                                 actionListener="#{pessoaBean.alterar}"
-                                 update=":formPrincipal:tabelaPessoas"
-                                 oncomplete="PF('dialogAlterar').hide()" />
-            </p:dialog>
+        <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+        <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+            <p:graphicImage name="/img/ajaxloadingbar.gif" />
+        </p:dialog>
+
+        <h:form id="menu">
+            <p:breadCrumb>
+                <p:menuitem value="Postar" url="index.jsf" />
+                <p:menuitem value="Buscar Twitts" url="buscar.jsf" />
+            </p:breadCrumb>
         </h:form>
 
-        <h:form id="formCadastrar">
-            <p:dialog header="Cadastrar" widgetVar="dialogCadastrar" modal="true">
-                <p:panelGrid id="panelCadastrar" columns="2">
-                    <h:outputText value="Nome:" />
-                    <p:inputText value="#{pessoaBean.pessoa.nome}" />
-                    <h:outputText value="Email:" />
-                    <p:inputText value="#{pessoaBean.pessoa.email}" />
-                    <h:outputText value="Telefone:" />
-                    <p:inputText value="#{pessoaBean.pessoa.telefone}" />
-                </p:panelGrid>
-                <p:commandButton value="Cadastrar"
-                                 actionListener="#{pessoaBean.cadastrar}"
-                                 update=":formPrincipal:tabelaPessoas"
-                                 oncomplete="PF('dialogCadastrar').hide()" />
-            </p:dialog>
+        <h:form id="frmPostar" styleClass="frm-postar">
+            <p:messages />
+            <h:panelGrid id="panelPostar" columns="1" cellpadding="0" cellspacing="0" styleClass="panel-postar">
+                <h:outputText value="O que você está pensando?" styleClass="tit-postar" />
+                <p:inputTextarea value="#{pwitter.mensagem}" rows="3" cols="95" counter="display" maxlength="150" counterTemplate="{0} caracter(es) restante(s)." autoResize="false" styleClass="txt-postar" />
+                <h:outputText id="display" styleClass="contador-post" />
+                <p:commandButton value="Postar!" id="btnPostar" actionListener="#{pwitter.postMsg()}" validateClient="true" update=":tblTimeline" icon="ui-icon-disk" styleClass="inputButton" />
+            </h:panelGrid>
         </h:form>
-        <h:form id="formExcluir">
-            <p:confirmDialog id="Excluir"
-                             message="Você gostaria de Deletar o #{pessoaBean.pessoa.nome}?"
-                             header="Excluir" severity="alert" widgetVar="confirmation">
-
-                <p:commandButton id="confirm" value="Sim"
-                                 oncomplete="confirmation.hide()"
-                                 actionListener="#{pessoaBean.excluir}"
-                                 update=":formPrincipal:tabelaPessoas" />
-                <p:commandButton id="decline" value="Não"
-                                 onclick="confirmation.hide()" type="button" />
-
-            </p:confirmDialog>
-        </h:form>
+        <p:separator />
+        <p:dataTable var="resultado" value="#{pwitter.showTimeline()}" id="tblTimeline" styleClass="tabela">
+            <f:facet name="header">Timeline</f:facet>
+            <p:column headerText="@Usuario" styleClass="tbl-timeline">
+                <h:outputText value="@#{resultado.getUser().getScreenName()}" styleClass="tbl-timeline-valor" />
+            </p:column>
+            <p:column headerText="Mensagem" styleClass="tbl-timeline">
+                <h:outputText value="#{resultado.getText()}" styleClass="tbl-timeline-valor" />
+            </p:column>
+        </p:dataTable>
     </h:body>
 </html>
+
